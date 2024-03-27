@@ -10,6 +10,10 @@ services:
       - MYSQL_DATABASE=projeto_imoveis
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3306"]
+      interval: 15s
+      timeout: 10s
     profiles: ['prod', 'dev']
   api-dev:
     build:
@@ -19,7 +23,8 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     volumes:
       - ./src:/home/app/src
     profiles: ['dev']
