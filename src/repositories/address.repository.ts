@@ -67,9 +67,7 @@ class AddressRepo implements IAddressRepo {
   }
 
   async getAll() {
-    const allAddress = await Address.findAll();
-
-    return allAddress;
+    return await Address.findAll();
   }
 
   async getById(id: number) {

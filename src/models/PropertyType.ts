@@ -14,7 +14,7 @@ export default class PropertyType extends Model {
 
   @AllowNull(false) 
   @Unique
-  @Column(DataType.STRING)
+  @Column(DataType.STRING(50))
     description!: string;
 
   @HasMany(() => Property)
