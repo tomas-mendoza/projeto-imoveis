@@ -2,6 +2,7 @@ import Express, { Application } from 'express';
 import Database from './config/database';
 import addressRouter from './routes/address.router';
 import propertyTypeRouter from './routes/propertyType.router';
+import ownerRouter from './routes/owner.router';
 
 class App {
   public app: Application;
@@ -19,7 +20,8 @@ class App {
 
   routes(): void {
     this.app.use('/address', addressRouter);
-    this.app.use('/property-type', propertyTypeRouter);
+    this.app.use('/property-types', propertyTypeRouter);
+    this.app.use('/owners', ownerRouter);
   }
 
   protected async connectDatabase() {
