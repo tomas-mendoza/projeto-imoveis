@@ -1,8 +1,8 @@
-import propertyTypeController from "../controllers/propertyType.controller";
-import validateSchema from "../middlewares/validate.schema";
-import { getOrDeleteSchema } from "../schemas/generic.schema";
-import { createPropertyTypeSchema, updatePropertyTypeSchema } from "../schemas/propertyType.schema";
-import BaseRouter from "./base.router";
+import propertyTypeController from '../controllers/propertyType.controller';
+import validateSchema from '../middlewares/validate.schema';
+import { getOrDeleteSchema } from '../schemas/generic.schema';
+import { createPropertyTypeSchema, updatePropertyTypeSchema } from '../schemas/propertyType.schema';
+import BaseRouter from './base.router';
 
 class PropertyTypeRouter extends BaseRouter {
   routes(): void {
