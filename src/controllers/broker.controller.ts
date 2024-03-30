@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import errorHandler from '../helpers/error.handler';
-import Customer from '../models/Customer';
-import customerRepository from '../repositories/customer.repository';
+import Broker from '../models/Broker';
+import brokerRepository from '../repositories/broker.repository';
 
-class CustomerController {
+class BrokerController {
   async create(req: Request, res: Response) {
     try {
       const {
@@ -19,7 +19,7 @@ class CustomerController {
 
       const formattedBirthdate = new Date(year, parseInt(month) - 1, date);
 
-      const newCustomer = new Customer({
+      const newBroker = new Broker({
         name,
         cpf,
         cnpj,
@@ -27,11 +27,11 @@ class CustomerController {
         address_id
       });
 
-      const data = await customerRepository.create(newCustomer);
+      const data = await brokerRepository.create(newBroker);
 
       return res.status(200).json({
         status: 'Created!',
-        message: 'This customer has been created successfully!',
+        message: 'This broker has been created successfully!',
         data
       });
     } catch(err: unknown) {
@@ -66,7 +66,7 @@ class CustomerController {
 
       const formattedBirthdate = new Date(year, parseInt(month) - 1, date);
 
-      const updatedCustomer = new Customer({
+      const updatedBroker = new Broker({
         id: parseInt(req.params.id),
         name,
         cpf,
@@ -75,11 +75,11 @@ class CustomerController {
         address_id
       });
 
-      const data = await customerRepository.update(updatedCustomer);
+      const data = await brokerRepository.update(updatedBroker);
 
       return res.status(200).json({
         status: 'Updated!',
-        message: 'This customer has been updated successfully!',
+        message: 'This broker has been updated successfully!',
         data
       });
     } catch(err: unknown) {
@@ -102,11 +102,11 @@ class CustomerController {
 
   async delete(req: Request, res: Response) {
     try {
-      await customerRepository.delete(parseInt(req.params.id));
+      await brokerRepository.delete(parseInt(req.params.id));
 
       return res.status(200).json({
         status: 'Deleted!',
-        message: 'This customer has been deleted successfully!'
+        message: 'This broker has been deleted successfully!'
       });
     } catch(err: unknown) {
       const {
@@ -128,11 +128,11 @@ class CustomerController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const data = await customerRepository.getAll();
+      const data = await brokerRepository.getAll();
 
       return res.status(200).json({
         status: 'Ok!',
-        message: 'This all customers data has been fetched successfully!',
+        message: 'This all brokers data has been fetched successfully!',
         data
       });
     } catch(err: unknown) {
@@ -155,11 +155,11 @@ class CustomerController {
 
   async getById(req: Request, res: Response) {
     try {
-      const data = await customerRepository.getById(parseInt(req.params.id));
+      const data = await brokerRepository.getById(parseInt(req.params.id));
 
       return res.status(200).json({
         status: 'Ok!',
-        message: 'This customer data has been fetched successfully!',
+        message: 'This broker data has been fetched successfully!',
         data
       });
     } catch(err: unknown) {
@@ -181,4 +181,4 @@ class CustomerController {
   }
 }
 
-export default new CustomerController();
+export default new BrokerController();

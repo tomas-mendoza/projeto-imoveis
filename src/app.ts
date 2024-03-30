@@ -4,6 +4,7 @@ import addressRouter from './routes/address.router';
 import propertyTypeRouter from './routes/propertyType.router';
 import ownerRouter from './routes/owner.router';
 import customerRouter from './routes/customer.router';
+import brokerRouter from './routes/broker.router';
 
 class App {
   public app: Application;
@@ -24,6 +25,7 @@ class App {
     this.app.use('/property-types', propertyTypeRouter);
     this.app.use('/owners', ownerRouter);
     this.app.use('/customers', customerRouter);
+    this.app.use('/brokers', brokerRouter);
   }
 
   protected async connectDatabase() {

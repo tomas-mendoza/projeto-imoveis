@@ -19,8 +19,6 @@ class OwnerController {
 
       const formattedBirthdate = new Date(year, parseInt(month) - 1, date);
 
-      console.log(formattedBirthdate);
-
       const newOwner = new Owner({
         name,
         cpf,
