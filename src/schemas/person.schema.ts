@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createOwnerSchema = z.object({
+export const createPersonSchema = z.object({
   body: z.object({
     name: z
       .string({ required_error: 'You should insert a name!' })
@@ -18,7 +18,7 @@ export const createOwnerSchema = z.object({
   })
 });
 
-export const updateOwnerSchema = z.object({  
+export const updatePersonSchema = z.object({  
   params: z.object({
     id: z
       .coerce
