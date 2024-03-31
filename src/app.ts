@@ -6,6 +6,7 @@ import ownerRouter from './routes/owner.router';
 import customerRouter from './routes/customer.router';
 import brokerRouter from './routes/broker.router';
 import propertyRouter from './routes/property.router';
+import photoRouter from './routes/photo.router';
 
 class App {
   public app: Application;
@@ -21,13 +22,14 @@ class App {
     this.app.use(Express.json());
   }
 
-  routes(): void {
+  protected routes(): void {
     this.app.use('/address', addressRouter);
     this.app.use('/property-types', propertyTypeRouter);
     this.app.use('/owners', ownerRouter);
     this.app.use('/customers', customerRouter);
     this.app.use('/brokers', brokerRouter);
     this.app.use('/properties', propertyRouter);
+    this.app.use('/photos', photoRouter);
   }
 
   protected async connectDatabase() {

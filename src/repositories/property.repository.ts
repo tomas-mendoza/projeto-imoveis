@@ -1,5 +1,6 @@
 import EntityNotFound from '../errors/EntityNotFound';
 import Address from '../models/Address';
+import Photo from '../models/Photo';
 import Property from '../models/Property';
 import PropertyType from '../models/PropertyType';
 
@@ -90,11 +91,12 @@ class PropertyRepo implements IPropertyRepo {
       include: [
         {
           model: PropertyType,
-          as: 'type'
         },
         {
           model: Address,
-          as: 'address'
+        },
+        {
+          model: Photo
         }
       ],
       attributes: {
@@ -114,11 +116,12 @@ class PropertyRepo implements IPropertyRepo {
       include: [
         {
           model: PropertyType,
-          as: 'type'
         },
         {
           model: Address,
-          as: 'address'
+        },
+        {
+          model: Photo
         }
       ],
       attributes: {
