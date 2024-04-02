@@ -8,6 +8,7 @@ import brokerRouter from './routes/broker.router';
 import propertyRouter from './routes/property.router';
 import photoRouter from './routes/photo.router';
 import visitRouter from './routes/visit.router';
+import historyRouter from './routes/history.router';
 
 class App {
   public app: Application;
@@ -32,6 +33,7 @@ class App {
     this.app.use('/properties', propertyRouter);
     this.app.use('/photos', photoRouter);
     this.app.use('/visits', visitRouter);
+    this.app.use('/history', historyRouter);
   }
 
   protected async connectDatabase() {

@@ -30,6 +30,14 @@ export default class History extends Model {
   @ForeignKey(() => Broker)
     broker_id!: number;
 
+  @AllowNull(false)
+  @Column(DataType.DATE)
+    negotiation_date!: Date;
+
+  @AllowNull(false)
+  @Column(DataType.FLOAT)
+    commission_perc!: number;
+
   @BelongsTo(() => Property)
     property!: Property;
 
