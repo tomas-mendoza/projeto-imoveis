@@ -6,9 +6,11 @@ import Visit from '../models/Visit';
 interface IVisitRepo {
   create(visit: Visit): Promise<Visit>;
   update(visit: Visit): Promise<Visit>;
-  delete(id: number): Promise<void>;
+  delete(customer_id: number, property_id: number): Promise<void>;
   getAll(): Promise<Visit[]>;
-  getById(id: number): Promise<Visit>;
+  getByCustomerId(id: number): Promise<Visit[]>;
+  getByPropertyId(id: number): Promise<Visit[]>;
+  getByCustomerIdAndPropertyId(customer_id: number, property_id: number): Promise<Visit>;
 }
 
 class VisitRepo implements IVisitRepo {
@@ -30,14 +32,18 @@ class VisitRepo implements IVisitRepo {
 
   async update(visit: Visit) {
     const {
-      id,
       property_id,
       customer_id,
       visit_date,
       visit_realized
     } = visit;
 
-    const oldVisit = await Visit.findByPk(id);
+    const oldVisit = await Visit.findOne({
+      where: {
+        customer_id,
+        property_id
+      }
+    });
 
     if(!oldVisit) {
       throw new EntityNotFound('Visit');
@@ -51,8 +57,13 @@ class VisitRepo implements IVisitRepo {
     return await oldVisit.save();
   }
 
-  async delete(id: number) {
-    const oldVisit = await Visit.findByPk(id);
+  async delete(customer_id: number, property_id: number) {
+    const oldVisit = await Visit.findOne({
+      where: {
+        customer_id,
+        property_id
+      }
+    });
 
     if(!oldVisit) {
       throw new EntityNotFound('Visit');
@@ -80,10 +91,10 @@ class VisitRepo implements IVisitRepo {
     });
   }
 
-  async getById(id: number) {
-    const visit = await Visit.findOne({
+  async getByCustomerId(id: number) {
+    const visit = await Visit.findAll({
       where: {
-        id
+        customer_id: id
       },
       include: [
         {
@@ -101,6 +112,63 @@ class VisitRepo implements IVisitRepo {
       }
     });
     
+    if(!visit) {
+      throw new EntityNotFound('Visit');
+    }
+
+    return visit;
+  }
+
+  async getByPropertyId(id: number) {
+    const visit = await Visit.findAll({
+      where: {
+        property_id: id
+      },
+      include: [
+        {
+          model: Property
+        },
+        {
+          model: Customer
+        }
+      ],
+      attributes: {
+        exclude: [
+          'property_id',
+          'customer_id'
+        ]
+      }
+    });
+    
+    if(!visit) {
+      throw new EntityNotFound('Visit');
+    }
+
+    return visit;
+  }
+
+  async getByCustomerIdAndPropertyId(customer_id: number, property_id: number) {
+    const visit = await Visit.findOne({
+      where: {
+        customer_id,
+        property_id
+      },
+      include: [
+        {
+          model: Property
+        },
+        {
+          model: Customer
+        }
+      ],
+      attributes: {
+        exclude: [
+          'property_id',
+          'customer_id'
+        ]
+      }
+    });
+
     if(!visit) {
       throw new EntityNotFound('Visit');
     }

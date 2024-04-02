@@ -63,7 +63,6 @@ class VisitController {
       const formattedDate = new Date(year, parseInt(month) - 1, date);
 
       const updatedVisit = new Visit({
-        id: parseInt(req.params.id),
         property_id,
         customer_id,
         visit_date: formattedDate,
@@ -97,7 +96,15 @@ class VisitController {
 
   async delete(req: Request, res: Response) {
     try {
-      await visitRepository.delete(parseInt(req.params.id));
+      const {
+        customer_id,
+        property_id
+      } = req.query;
+
+      if(!customer_id) {
+        return;
+      }
+      await visitRepository.delete(parseInt(customer_id as string), parseInt(property_id as string));
 
       return res.status(200).json({
         status: 'Deleted!',
@@ -148,9 +155,66 @@ class VisitController {
     }
   }
 
-  async getById(req: Request, res: Response) {
+  async getByCustomerId(req: Request, res: Response) {
     try {
-      const data = await visitRepository.getById(parseInt(req.params.id));
+      const data = await visitRepository.getByCustomerId(parseInt(req.params.id));
+
+      return res.status(200).json({
+        status: 'Ok!',
+        message: 'This visit data has been fetched successfully!',
+        data
+      });
+    } catch(err: unknown) {
+      const {
+        code,
+        status,
+        message,
+        errors,
+        cause
+      } = errorHandler(err);
+
+      return res.status(code).json({
+        status,
+        message,
+        errors,
+        cause
+      });
+    }
+  }
+
+  async getByPropertyId(req: Request, res: Response) {
+    try {
+      const data = await visitRepository.getByPropertyId(parseInt(req.params.id));
+
+      return res.status(200).json({
+        status: 'Ok!',
+        message: 'This visit data has been fetched successfully!',
+        data
+      });
+    } catch(err: unknown) {
+      const {
+        code,
+        status,
+        message,
+        errors,
+        cause
+      } = errorHandler(err);
+
+      return res.status(code).json({
+        status,
+        message,
+        errors,
+        cause
+      });
+    }
+  }
+
+  async getByCustomerIdAndPropertyId(req: Request, res: Response) {
+    try {
+      const data = await visitRepository.getByCustomerIdAndPropertyId(
+        parseInt(req.params.customer_id),
+        parseInt(req.params.property_id)
+      );
 
       return res.status(200).json({
         status: 'Ok!',

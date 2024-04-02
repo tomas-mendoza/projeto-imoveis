@@ -1,4 +1,4 @@
-import { AllowNull, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import Property from './Property';
 import Customer from './Customer';
 
@@ -23,4 +23,10 @@ export default class Visit extends Model {
   @AllowNull(false)
   @Column(DataType.BOOLEAN)
     visit_realized!: boolean;
+
+  @BelongsTo(() => Property)
+    property!: Property;
+
+  @BelongsTo(() => Customer)
+    customer!: Customer;
 }

@@ -49,16 +49,6 @@ export default class Customer extends Model {
   } })
     visits!: Visit[];
 
-  // @BelongsToMany(() => Broker, {
-  //   through: {
-  //     model: () => History
-  //   }
-  // })
-  // @BelongsToMany(() => Property, {
-  //   through: {
-  //     model: () => History
-  //   }
-  // })
   @HasMany(() => History)
     history!: History[];
 }

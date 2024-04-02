@@ -18,11 +18,15 @@ export const createVisitSchema = z.object({
 });
 
 export const updateVisitSchema = z.object({
-  params: z.object({
-    id: z
+  query: z.object({
+    customer_id: z
       .coerce
-      .number({ required_error: 'You should insert an id!' })
-      .min(1, { message: 'The id should be greater than 0!' })
+      .number({ required_error: 'You should insert a customer id!' })
+      .min(1, { message: 'The customer id should be greater than 0!' }),
+    property_id: z
+      .coerce
+      .number({ required_error: 'You should insert a property id!' })
+      .min(1, { message: 'The property id should be greater than 0!' })
   }),
   body: z.object({
     property_id: z
@@ -37,5 +41,31 @@ export const updateVisitSchema = z.object({
     visit_realized: z
       .coerce
       .boolean({ required_error: 'You should insert if visit was realized!' })
+  })
+});
+
+export const getByCostumerIdAndPropertyIdSchema = z.object({
+  params: z.object({
+    customer_id: z
+      .coerce
+      .number({ required_error: 'You should insert a customer id!' })
+      .min(1, { message: 'The customer id should be greater than 0!' }),
+    property_id: z
+      .coerce
+      .number({ required_error: 'You should insert a property id!' })
+      .min(1, { message: 'The property id should be greater than 0!' })
+  })
+});
+
+export const deleteVisitSchema = z.object({
+  query: z.object({
+    customer_id: z
+      .coerce
+      .number({ required_error: 'You should insert a customer id!' })
+      .min(1, { message: 'The customer id should be greater than 0!' }),
+    property_id: z
+      .coerce
+      .number({ required_error: 'You should insert a property id!' })
+      .min(1, { message: 'The property id should be greater than 0!' })
   })
 });
